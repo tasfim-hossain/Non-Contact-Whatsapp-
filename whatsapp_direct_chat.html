@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#075e54" />
+  <title>WhatsApp Direct Chat</title>
+  <style>
+    :root {
+      --green: #128c7e;
+      --green-dark: #075e54;
+      --text: #172b28;
+      --muted: #6b7c78;
+      --border: #dce7e3;
+      --surface: #ffffff;
+      --bg: #f2f8f6;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: grid;
+      place-items: center;
+      padding: 24px;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(circle at 15% 15%, rgba(18,140,126,.12), transparent 32%),
+        radial-gradient(circle at 90% 85%, rgba(7,94,84,.10), transparent 30%),
+        var(--bg);
+    }
+    .card {
+      width: min(100%, 460px);
+      background: var(--surface);
+      border: 1px solid rgba(220,231,227,.9);
+      border-radius: 28px;
+      padding: 34px;
+      box-shadow: 0 22px 70px rgba(20,70,60,.12);
+    }
+    .logo {
+      width: 58px;
+      height: 58px;
+      display: grid;
+      place-items: center;
+      border-radius: 18px;
+      background: #e3f6ee;
+      color: var(--green-dark);
+      margin-bottom: 22px;
+    }
+    h1 { margin: 0; font-size: clamp(25px, 6vw, 32px); letter-spacing: -1px; }
+    .intro { margin: 10px 0 28px; color: var(--muted); line-height: 1.55; font-size: 15px; }
+    label { display: block; font-size: 13px; font-weight: 700; margin-bottom: 9px; }
+    .phone-row {
+      display: grid;
+      grid-template-columns: 132px 1fr;
+      gap: 10px;
+    }
+    select, input {
+      width: 100%;
+      height: 54px;
+      border: 1px solid var(--border);
+      border-radius: 13px;
+      background: #fbfdfc;
+      color: var(--text);
+      padding: 0 13px;
+      font: inherit;
+      outline: none;
+      transition: border-color .15s, box-shadow .15s;
+    }
+    select:focus, input:focus {
+      border-color: var(--green);
+      box-shadow: 0 0 0 3px rgba(18,140,126,.12);
+    }
+    input::placeholder { color: #9aaba6; }
+    .hint { margin: 10px 0 20px; color: var(--muted); font-size: 12px; line-height: 1.5; }
+    button {
+      width: 100%;
+      height: 54px;
+      border: 0;
+      border-radius: 13px;
+      background: var(--green);
+      color: white;
+      font-size: 15px;
+      font-weight: 750;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      transition: transform .15s, background .15s;
+    }
+    button:hover { background: var(--green-dark); transform: translateY(-1px); }
+    button:active { transform: translateY(0); }
+    .message { min-height: 20px; margin: 12px 0 0; color: #b42318; font-size: 13px; }
+    .footer { margin-top: 26px; text-align: center; color: var(--muted); font-size: 12px; }
+    .footer span { color: var(--green-dark); font-weight: 700; }
+    @media (max-width: 420px) {
+      body { padding: 14px; }
+      .card { padding: 25px 20px; border-radius: 22px; }
+      .phone-row { grid-template-columns: 112px 1fr; gap: 8px; }
+      select, input { padding: 0 10px; font-size: 14px; }
+    }
+  </style>
+</head>
+<body>
+  <main class="card">
+    <div class="logo" aria-hidden="true">
+      <svg width="32" height="32" viewBox="0 0 24 24" fill="none">
+        <path d="M20.5 11.7a8.5 8.5 0 0 1-12.6 7.4L3 20l.9-4.7A8.5 8.5 0 1 1 20.5 11.7Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>
+        <path d="M8.2 7.7c.2-.4.4-.4.7-.4h.5c.2 0 .4.1.5.4l.7 1.6c.1.2.1.4 0 .6l-.5.7c-.2.2-.2.4 0 .6.5.8 1.2 1.5 2.1 2 .2.1.4.1.6-.1l.7-.8c.2-.2.4-.2.6-.1l1.6.8c.2.1.3.3.3.5 0 .6-.3 1.2-.7 1.5-.5.4-1.1.6-1.8.5-1.1-.2-2.4-.8-3.7-2-1.3-1.2-2.2-2.7-2.4-3.8-.1-.7.1-1.4.4-2Z" fill="currentColor"/>
+      </svg>
+    </div>
+    <h1>WhatsApp Direct Chat</h1>
+    <p class="intro">Start a WhatsApp conversation with any number—without adding it to your contacts.</p>
+
+    <form id="chatForm" novalidate>
+      <label for="phone">Phone number</label>
+      <div class="phone-row">
+        <select id="countryCode" aria-label="Country calling code">
+          <option value="880" selected>🇧🇩 +880</option>
+          <option value="1">🇺🇸 +1</option>
+          <option value="44">🇬🇧 +44</option>
+          <option value="91">🇮🇳 +91</option>
+          <option value="92">🇵🇰 +92</option>
+          <option value="971">🇦🇪 +971</option>
+          <option value="966">🇸🇦 +966</option>
+          <option value="60">🇲🇾 +60</option>
+          <option value="65">🇸🇬 +65</option>
+          <option value="61">🇦🇺 +61</option>
+          <option value="49">🇩🇪 +49</option>
+          <option value="33">🇫🇷 +33</option>
+          <option value="other">Other</option>
+        </select>
+        <input id="phone" type="tel" inputmode="tel" autocomplete="tel-national"
+               placeholder="01XXXXXXXXX" aria-describedby="phoneHint" required />
+      </div>
+      <p class="hint" id="phoneHint">Enter the number without the country code. For Bangladesh, you can enter 017XXXXXXXX.</p>
+      <button type="submit">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <path d="M20.5 11.7a8.5 8.5 0 0 1-12.6 7.4L3 20l.9-4.7A8.5 8.5 0 1 1 20.5 11.7Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>
+          <path d="M8.2 7.7c.2-.4.4-.4.7-.4h.5c.2 0 .4.1.5.4l.7 1.6c.1.2.1.4 0 .6l-.5.7c-.2.2-.2.4 0 .6.5.8 1.2 1.5 2.1 2 .2.1.4.1.6-.1l.7-.8c.2-.2.4-.2.6-.1l1.6.8c.2.1.3.3.3.5 0 .6-.3 1.2-.7 1.5-.5.4-1.1.6-1.8.5-1.1-.2-2.4-.8-3.7-2-1.3-1.2-2.2-2.7-2.4-3.8-.1-.7.1-1.4.4-2Z" fill="currentColor"/>
+        </svg>
+        Open WhatsApp
+      </button>
+      <p class="message" id="message" role="alert"></p>
+    </form>
+    <div class="footer">No contact saving. <span>Just chat.</span></div>
+  </main>
+
+  <script>
+    const form = document.getElementById('chatForm');
+    const phoneInput = document.getElementById('phone');
+    const countryCode = document.getElementById('countryCode');
+    const message = document.getElementById('message');
+    const hint = document.getElementById('phoneHint');
+
+    countryCode.addEventListener('change', () => {
+      if (countryCode.value === 'other') {
+        hint.textContent = 'For other countries, select “Other” and enter the full international number, including country code.';
+        phoneInput.placeholder = 'Country code + number';
+      } else if (countryCode.value === '880') {
+        hint.textContent = 'Enter the number without the country code. For Bangladesh, you can enter 017XXXXXXXX.';
+        phoneInput.placeholder = '01XXXXXXXXX';
+      } else {
+        hint.textContent = 'Enter the number without the country code.';
+        phoneInput.placeholder = 'Phone number';
+      }
+      message.textContent = '';
+    });
+
+    form.addEventListener('submit', (event) => {
+      event.preventDefault();
+      message.textContent = '';
+
+      let digits = phoneInput.value.replace(/\D/g, '');
+      let fullNumber = '';
+
+      if (countryCode.value === 'other') {
+        // For the "Other" option, require an international number.
+        fullNumber = digits;
+      } else {
+        const code = countryCode.value;
+        // Remove leading national trunk zero, commonly used in local formats.
+        digits = digits.replace(/^0+/, '');
+        fullNumber = code + digits;
+      }
+
+      if (!digits || fullNumber.length < 8 || fullNumber.length > 15) {
+        message.textContent = 'Please enter a valid phone number (8–15 digits including country code).';
+        phoneInput.focus();
+        return;
+      }
+
+      // WhatsApp wa.me links require digits only, in international format.
+      window.location.href = 'https://wa.me/' + fullNumber;
+    });
+  </script>
+</body>
+</html>
